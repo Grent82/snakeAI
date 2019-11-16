@@ -31,7 +31,9 @@ class Game(object):
         self.food = Food()
         self.commandPending = False
 
-        self.writeScore(self.snake.score)
+        self.highScore = 0
+
+        self.writeScore()
         
 
     def snakeUp(self):
@@ -66,11 +68,11 @@ class Game(object):
         if self.snake.checkFoodCollision(self.food):
             self.snake.eat()
             self.food.changeLocation()
-            self.writeScore(self.snake.score)
+            self.writeScore()
         elif self.snake.checkWallCollision() or self.snake.checkSelfCollision():
             self.snake = Snake()
             self.food.changeLocation() 
-            self.writeScore(self.snake.score)
+            self.writeScore()
         else:
             self.snake.moveOneStep(screen)
 
@@ -79,9 +81,14 @@ class Game(object):
         self.screen.update()
         self.screen.ontimer(lambda: self.nextFrame(), 100)
 
-    def writeScore(self, score: int):
+    def writeScore(self):
+        self.updateScore()
         self.pen.clear()
-        self.pen.write("Score: {}".format(score), align="center", font=("Courier", 24, "normal"))
+        self.pen.write("Score: {}  High Score: {}".format(self.snake.score, self.highScore), align="center", font=("Courier", 20, "normal"))
+
+    def updateScore(self):
+        if self.snake.score > self.highScore:
+            self.highScore = self.snake.score
 
 
 # https://www.youtube.com/watch?v=BP7KMlbvtOo
