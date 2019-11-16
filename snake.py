@@ -39,10 +39,12 @@ class Snake:
         self.body = []
         self.nextX = 0
         self.nextY = 0
+        self.score = 0
 
     def eat(self):
         self.body.append(Square(self.head.x, self.head.y))
         self.head.x, self.head.y = self.head.x + SIZE * self.nextX, self.head.y + SIZE * self.nextY
+        self.score += 1
 
     def moveOneStep(self, screen):
         self.body.append(Square(self.head.x, self.head.y))
