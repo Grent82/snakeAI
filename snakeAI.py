@@ -2,7 +2,6 @@ from turtle import Turtle, Screen
 from snake import Snake, Food
 import time
 
-SIZE = 20
 WIDTH = 400
 HEIGHT = 400
 
@@ -55,10 +54,10 @@ class Game(object):
 
         #print ("x: " + str(self.snake.head.x) + " - y: " + str(self.snake.head.y))
        
-        if self.checkFoodCollision():
+        if self.snake.checkFoodCollision(self.food):
             self.snake.eat()
             self.food.changeLocation()
-        elif self.checkWallCollision() or self.checkSelfCollision():
+        elif self.snake.checkWallCollision() or self.snake.checkSelfCollision():
             self.snake = Snake()
             self.food.changeLocation() 
         else:
@@ -68,26 +67,6 @@ class Game(object):
         self.snake.drawSelf(self.artist)
         self.screen.update()
         self.screen.ontimer(lambda: self.nextFrame(), 100)
-
-    def checkFoodCollision(self):
-        if (self.snake.head.x, self.snake.head.y) == (self.food.x, self.food.y):
-                return True
-        return False
-
-    def checkWallCollision(self):
-        if (self.snake.head.x >= WIDTH/2 - SIZE or
-               self.snake.head.y >= HEIGHT/2 - SIZE or
-               self.snake.head.x < -WIDTH/2 + SIZE or
-               self.snake.head.y < -HEIGHT/2 + SIZE):
-                return True
-        return False
-
-    def checkSelfCollision(self):
-        for body in self.snake.body:
-            if body.x == self.snake.head.x and body.y == self.snake.head.y:
-                return True
-        return False
-
 
 
 # https://www.youtube.com/watch?v=BP7KMlbvtOo

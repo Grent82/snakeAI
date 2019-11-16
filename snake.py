@@ -69,3 +69,22 @@ class Snake:
         self.head.drawSelf(turtle)
         for segment in self.body:
             segment.drawSelf(turtle)
+
+    def checkFoodCollision(self, food: Food):
+        if (self.head.x, self.head.y) == (food.x, food.y):
+                return True
+        return False
+
+    def checkWallCollision(self):
+        if (self.head.x >= WIDTH/2 - SIZE or
+               self.head.y >= HEIGHT/2 - SIZE or
+               self.head.x < -WIDTH/2 + SIZE or
+               self.head.y < -HEIGHT/2 + SIZE):
+                return True
+        return False
+
+    def checkSelfCollision(self):
+        for body in self.body:
+            if body.x == self.head.x and body.y == self.head.y:
+                return True
+        return False
